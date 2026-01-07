@@ -2,88 +2,166 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ thống Quản trị - Công an Phường Nam Đông Hà</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <script>
         tailwind.config = {
-          theme: {
-            extend: {
-              colors: {
-                navy: { 900: '#001f3f' },
-                police: { red: '#A51C1E', gold: '#D4AF37', green: '#00542D' }
-              }
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 900: '#001f3f', 950: '#00152b' },
+                        police: { red: '#A51C1E', gold: '#D4AF37', green: '#00542D' }
+                    },
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] }
+                }
             }
-          }
         }
     </script>
+
     <style>
-        body { background-color: #fcfaf2; margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .dong-son-bg { background-image: radial-gradient(circle, #f3e9cc 1px, transparent 1px); background-size: 24px 24px; }
+        body { background-color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .dong-son-pattern {
+            background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-    <script>
-        const e = React.createElement;
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
         function App() {
-            return e('div', { className: 'min-h-screen flex flex-col dong-son-bg' },
-                // Header
-                e('header', { className: 'bg-police-red text-white p-4 shadow-lg border-b-4 border-police-gold' },
-                    e('div', { className: 'container mx-auto flex items-center justify-between' },
-                        e('div', { className: 'flex items-center gap-3' },
-                            e('i', { className: 'fa-solid fa-shield-halved text-2xl' }),
-                            e('div', null,
-                                e('h1', { className: 'font-bold uppercase tracking-tight text-sm md:text-lg' }, 'Công an Phường Nam Đông Hà'),
-                                e('p', { className: 'text-[10px] opacity-90' }, 'Hệ thống Quản trị Nội bộ')
-                            )
-                        ),
-                        e('div', { className: 'hidden sm:block text-sm font-medium' }, 'Trung úy Hoa Hướng Dương')
-                    )
-                ),
-                // Main Content
-                e('main', { className: 'container mx-auto flex-1 p-4 lg:p-8' },
-                    e('div', { className: 'grid grid-cols-1 md:grid-cols-3 gap-6' },
-                        e('div', { className: 'bg-white p-6 rounded-xl shadow-md border-l-4 border-police-green' },
-                            e('h3', { className: 'font-bold text-gray-700' }, 'Trật tự xã hội'),
-                            e('p', { className: 'text-4xl font-extrabold text-navy-900 mt-2' }, '33'),
-                            e('p', { className: 'text-xs text-green-600 mt-2' }, '▼ Giảm 12%')
-                        ),
-                        e('div', { className: 'bg-white p-6 rounded-xl shadow-md border-l-4 border-police-gold' },
-                            e('h3', { className: 'font-bold text-gray-700' }, 'Cư trú'),
-                            e('p', { className: 'text-4xl font-extrabold text-navy-900 mt-2' }, '152'),
-                            e('p', { className: 'text-xs text-gray-500 mt-2' }, 'Hồ sơ chờ duyệt')
-                        ),
-                        e('div', { className: 'bg-white p-6 rounded-xl shadow-md border-l-4 border-police-red' },
-                            e('h3', { className: 'font-bold text-gray-700' }, 'Hệ thống AI'),
-                            e('div', { className: 'flex items-center gap-2 mt-2 text-police-red font-bold' },
-                                e('span', { className: 'w-2 h-2 bg-red-500 rounded-full animate-ping' }),
-                                'READY'
-                            )
-                        )
-                    ),
-                    e('div', { className: 'mt-8 bg-white rounded-2xl shadow-xl p-10 text-center' },
-                        e('i', { className: 'fa-solid fa-microchip text-6xl text-gray-200 mb-4' }),
-                        e('h2', { className: 'text-xl font-bold text-gray-800' }, 'Chào mừng Trung úy Hoa Hướng Dương'),
-                        e('p', { className: 'text-gray-500 mt-2' }, 'Hệ thống đã sẵn sàng cho công tác nghiệp vụ.')
-                    )
-                ),
-                // Footer
-                e('footer', { className: 'bg-gray-100 p-4 text-center text-[10px] text-gray-400 border-t' },
-                    '© 2026 Công an Phường Nam Đông Hà - Quảng Trị'
-                )
+            const [time, setTime] = useState(new Date().toLocaleTimeString('vi-VN'));
+
+            useEffect(() => {
+                const timer = setInterval(() => setTime(new Date().toLocaleTimeString('vi-VN')), 1000);
+                return () => clearInterval(timer);
+            }, []);
+
+            return (
+                <div className="min-h-screen flex flex-col dong-son-pattern">
+                    {/* Top Navigation */}
+                    <nav className="bg-navy-950 text-white px-6 py-3 flex justify-between items-center shadow-2xl border-b-2 border-police-gold">
+                        <div className="flex items-center gap-4">
+                            <div className="bg-white p-1.5 rounded-full shadow-[0_0_15px_rgba(212,175,55,0.5)]">
+                                <i className="fa-solid fa-shield-halved text-police-red text-xl"></i>
+                            </div>
+                            <div>
+                                <h1 className="font-extrabold tracking-tighter text-lg leading-none">CAP NAM ĐÔNG HÀ</h1>
+                                <p className="text-[10px] text-police-gold font-bold uppercase tracking-widest mt-1">Hệ thống điều hành trực tuyến</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-6">
+                            <div className="hidden md:block text-right">
+                                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Thời gian hệ thống</p>
+                                <p className="text-sm font-mono text-police-gold">{time}</p>
+                            </div>
+                            <div className="h-10 w-10 rounded-full border-2 border-police-gold overflow-hidden bg-gray-200">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar" />
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Main Content */}
+                    <main className="container mx-auto p-4 md:p-8 flex-1">
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                            {[
+                                { label: 'Tội phạm TTXH', value: '33', color: 'border-police-red', icon: 'fa-user-ninja' },
+                                { label: 'Hồ sơ Cư trú', value: '1,252', color: 'border-police-gold', icon: 'fa-address-card' },
+                                { label: 'Tin báo 24/7', value: '08', color: 'border-police-green', icon: 'fa-bell' },
+                                { label: 'Thiết bị Online', value: '45', color: 'border-blue-500', icon: 'fa-microchip' }
+                            ].map((stat, idx) => (
+                                <div key={idx} className={`glass-card p-5 rounded-2xl shadow-sm border-b-4 ${stat.color} transition-transform hover:scale-105 cursor-pointer`}>
+                                    <div className="flex justify-between items-start">
+                                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">{stat.label}</p>
+                                        <i className={`fa-solid ${stat.icon} text-gray-300`}></i>
+                                    </div>
+                                    <p className="text-3xl font-black text-navy-900 mt-2">{stat.value}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Main Interaction Area */}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div className="lg:col-span-2 space-y-8">
+                                <div className="glass-card rounded-3xl shadow-xl overflow-hidden border border-white">
+                                    <div className="bg-navy-900 p-4 flex justify-between items-center">
+                                        <h3 className="text-white font-bold flex items-center gap-2 italic">
+                                            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                                            BẢN TIN NGHIỆP VỤ TRỰC TUYẾN
+                                        </h3>
+                                        <button className="text-xs text-police-gold font-bold underline">Xem tất cả</button>
+                                    </div>
+                                    <div className="p-12 text-center">
+                                        <div className="inline-block p-6 rounded-full bg-navy-50 mb-6">
+                                            <i className="fa-solid fa-brain text-5xl text-navy-900 animate-bounce"></i>
+                                        </div>
+                                        <h2 className="text-2xl font-black text-navy-950 mb-4">Xin chào, Trung úy Hoa Hướng Dương</h2>
+                                        <p className="text-gray-500 max-w-md mx-auto leading-relaxed">
+                                            Hệ thống AI đã sẵn sàng phân tích dữ liệu địa bàn. Hiện tại không có cảnh báo đỏ nào được ghi nhận trong 24h qua.
+                                        </p>
+                                        <div className="mt-8 flex gap-3 justify-center">
+                                            <button className="bg-police-red text-white px-6 py-2.5 rounded-full font-bold shadow-lg hover:bg-red-700 transition">Báo cáo nhanh</button>
+                                            <button className="bg-navy-900 text-white px-6 py-2.5 rounded-full font-bold shadow-lg hover:bg-navy-800 transition">Tra cứu CSDL</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="bg-police-red p-6 rounded-3xl text-white shadow-xl relative overflow-hidden group">
+                                    <i className="fa-solid fa-tower-broadcast absolute -right-4 -bottom-4 text-8xl opacity-10 group-hover:scale-110 transition-transform"></i>
+                                    <h4 className="font-black text-xl mb-2 italic">ĐƯỜNG DÂY NÓNG</h4>
+                                    <p className="text-sm opacity-80 mb-4 font-medium text-police-gold">Phản ứng nhanh Phường Nam Đông Hà</p>
+                                    <p className="text-3xl font-mono font-bold tracking-tighter">0233.xxx.xxx</p>
+                                </div>
+                                
+                                <div className="glass-card p-6 rounded-3xl shadow-lg border border-white">
+                                    <h4 className="font-bold text-navy-900 mb-4 flex items-center gap-2">
+                                        <i className="fa-solid fa-calendar-check text-police-gold"></i>
+                                        Lịch trực đơn vị
+                                    </h4>
+                                    <div className="space-y-4">
+                                        {[1, 2, 3].map(i => (
+                                            <div key={i} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-xl transition">
+                                                <div className="w-1 h-8 bg-police-gold rounded-full"></div>
+                                                <div>
+                                                    <p className="text-xs font-bold text-navy-900">Kíp trực số 0{i}</p>
+                                                    <p className="text-[10px] text-gray-400">07:30 - 17:30 | 07/01/2026</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+
+                    {/* Footer */}
+                    <footer className="p-6 text-center">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+                            Bản quyền thuộc về Công an Phường Nam Đông Hà © 2026
+                        </p>
+                    </footer>
+                </div>
             );
         }
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(e(App));
+        root.render(<App />);
     </script>
 </body>
 </html>

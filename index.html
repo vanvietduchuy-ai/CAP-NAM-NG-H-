@@ -1,106 +1,83 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hệ thống Quản trị - Công an Phường Nam Đông Hà</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
     <script>
         tailwind.config = {
           theme: {
             extend: {
               colors: {
-                navy: { 900: '#001f3f' },
-                police: { red: '#A51C1E', gold: '#D4AF37', cream: '#FFF9E5', green: '#00542D' }
+                navy: {
+                  50: '#f0f4f8',
+                  100: '#d9e2ec',
+                  200: '#bcccdc',
+                  300: '#9fb3c8',
+                  400: '#829ab1',
+                  500: '#627d98',
+                  600: '#486581',
+                  700: '#334e68',
+                  800: '#243b53',
+                  900: '#001f3f',
+                  950: '#00152b',
+                },
+                police: {
+                  red: '#A51C1E', // Deep Administrative Red
+                  gold: '#D4AF37', // Traditional Gold
+                  cream: '#FFF9E5', // Background from image
+                  green: '#00542D'
+                }
               },
-              fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] }
+              fontFamily: {
+                sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+              }
             }
           }
         }
     </script>
     <style>
-        body { background-color: #fcfaf2; color: #1e293b; margin: 0; }
-        .dong-son-bg { background-image: radial-gradient(circle, #f3e9cc 1px, transparent 1px); background-size: 24px 24px; }
-        .emblem-glow { filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.4)); }
+        body { 
+          background-color: #fcfaf2; 
+          color: #1e293b; 
+          letter-spacing: -0.01em;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .card-shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.02); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        .dong-son-bg {
+          background-image: radial-gradient(circle, #f3e9cc 1px, transparent 1px);
+          background-size: 24px 24px;
+        }
+
+        .emblem-glow {
+          filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.4));
+        }
+
+        @media (max-width: 640px) {
+          .text-mobile-header { font-size: 16px !important; }
+          .text-mobile-body { font-size: 14px !important; }
+        }
     </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+  }
+}
+</script>
 </head>
 <body>
     <div id="root"></div>
-
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-
-        function App() {
-            return (
-                <div className="min-h-screen flex flex-col dong-son-bg font-sans">
-                    <header className="bg-police-red text-white p-4 shadow-lg border-b-4 border-police-gold">
-                        <div className="container mx-auto flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="bg-white p-1 rounded-full emblem-glow">
-                                    <i className="fa-solid fa-shield-halved text-police-red text-2xl"></i>
-                                </div>
-                                <div>
-                                    <h1 className="font-bold uppercase tracking-tight text-sm md:text-lg">Công an Phường Nam Đông Hà</h1>
-                                    <p className="text-[10px] opacity-90 font-semibold italic">Hệ thống Điều hành & Quản trị Nội bộ</p>
-                                </div>
-                            </div>
-                            <div className="text-right hidden sm:block">
-                                <span className="text-sm font-bold border-b-2 border-police-gold">Trung úy Hoa Hướng Dương</span>
-                            </div>
-                        </div>
-                    </header>
-
-                    <main className="container mx-auto flex-1 p-4 lg:p-8">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="bg-white p-6 rounded-xl shadow-md border-l-8 border-police-green">
-                                <h3 className="font-bold text-gray-700 uppercase text-xs">Tội phạm trật tự xã hội</h3>
-                                <p className="text-4xl font-extrabold text-navy-900 mt-2">33</p>
-                                <p className="text-[10px] text-green-600 font-bold mt-2 tracking-widest">▼ GIẢM 12%</p>
-                            </div>
-
-                            <div className="bg-white p-6 rounded-xl shadow-md border-l-8 border-police-gold">
-                                <h3 className="font-bold text-gray-700 uppercase text-xs">Cư trú & Định danh</h3>
-                                <p className="text-4xl font-extrabold text-navy-900 mt-2">152</p>
-                                <p className="text-[10px] text-gray-400 font-bold mt-2">HỒ SƠ CHỜ PHÊ DUYỆT</p>
-                            </div>
-
-                            <div className="bg-white p-6 rounded-xl shadow-md border-l-8 border-police-red flex flex-col justify-center items-center">
-                                <h3 className="font-bold text-gray-700 uppercase text-[10px] mb-2">Trạng thái hệ thống</h3>
-                                <div className="flex items-center gap-2 text-police-red">
-                                    <span className="w-3 h-3 bg-red-600 rounded-full animate-ping"></span>
-                                    <span className="font-black text-sm">ONLINE</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="mt-8 bg-white rounded-2xl shadow-2xl overflow-hidden min-h-[350px] flex flex-col justify-center items-center p-10 border border-gray-100">
-                            <div className="bg-gray-50 p-6 rounded-full mb-6">
-                                <i className="fa-solid fa-microchip text-6xl text-navy-900 opacity-20"></i>
-                            </div>
-                            <h2 className="text-2xl font-black text-navy-900 uppercase">Chào mừng Trung úy Hoa Hướng Dương</h2>
-                            <p className="text-gray-500 mt-4 text-center max-w-md italic font-medium leading-relaxed">
-                                "Hệ thống đang đồng bộ dữ liệu với cơ sở dữ liệu quốc gia về dân cư phục vụ công tác nghiệp vụ cơ bản."
-                            </p>
-                        </div>
-                    </main>
-
-                    <footer className="bg-navy-900 text-white p-4 text-center text-[9px] uppercase tracking-[0.3em] font-bold">
-                        &copy; 2026 CÔNG AN PHƯỜNG NAM ĐÔNG HÀ - QUẢNG TRỊ
-                    </footer>
-                </div>
-            );
-        }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
 </body>
 </html>

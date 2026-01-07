@@ -1,0 +1,7 @@
+{
+  "name": "Điều hành v3",
+  "description": "An intelligent AI-powered assistant that converts official documents and instructions into structured, manageable tasks with priority levels and next steps.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
